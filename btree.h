@@ -1,10 +1,13 @@
 #pragma once
+
 #include <iostream>
+
 template <class Type> struct Node {
   Type item;
   Node<Type> *left;
   Node<Type> *right;
 };
+
 template <class Type> class BTree {
 public:
   BTree();
@@ -29,13 +32,16 @@ private:
   void postOrder(Node<Type> *curr);
   int nodeCount(Node<Type> *curr);
 };
+
 template <class Type> BTree<Type>::BTree(const BTree<Type> &b) {
   copyTree(b.root);
 }
+
 template <class Type> BTree<Type> BTree<Type>::operator=(const BTree<Type> &b) {
   copyTree(b.root);
   return *this;
 }
+
 template <class Type> void BTree<Type>::copyTree(Node<Type> *curr) {
   if (curr) {
     insert(curr->item);
@@ -43,8 +49,17 @@ template <class Type> void BTree<Type>::copyTree(Node<Type> *curr) {
     copyTree(curr->right);
   }
 }
-template <class Type> BTree<Type>::BTree() { root = nullptr; }
-template <class Type> BTree<Type>::~BTree() { destroy(root); }
+
+template <class Type> BTree<Type>::BTree() {
+  //
+  root = nullptr;
+}
+
+template <class Type> BTree<Type>::~BTree() {
+  //
+  destroy(root);
+}
+
 template <class Type> void BTree<Type>::destroy(Node<Type> *curr) {
   if (curr != nullptr) {
     destroy(curr->left);
@@ -52,6 +67,7 @@ template <class Type> void BTree<Type>::destroy(Node<Type> *curr) {
     delete curr;
   }
 }
+
 template <class Type> void BTree<Type>::insert(Type item) {
   if (root == nullptr) {
     root = new Node<Type>;
@@ -62,6 +78,7 @@ template <class Type> void BTree<Type>::insert(Type item) {
     insert(item, root);
   }
 }
+
 template <class Type> void BTree<Type>::insert(Type item, Node<Type> *curr) {
   if (item < curr->item) {
     if (curr->left == nullptr) {
@@ -85,18 +102,22 @@ template <class Type> void BTree<Type>::insert(Type item, Node<Type> *curr) {
     }
   }
 }
+
 template <class Type> void BTree<Type>::preOrder() {
   std::cout << "Pre Order: ";
   preOrder(root);
 }
+
 template <class Type> void BTree<Type>::inOrder() {
   std::cout << "In Order: ";
   inOrder(root);
 }
+
 template <class Type> void BTree<Type>::postOrder() {
   std::cout << "Post Order: ";
   postOrder(root);
 }
+
 template <class Type> void BTree<Type>::preOrder(Node<Type> *curr) {
   if (curr) {
     std::cout << curr->item << " ";
@@ -104,6 +125,7 @@ template <class Type> void BTree<Type>::preOrder(Node<Type> *curr) {
     preOrder(curr->right);
   }
 }
+
 template <class Type> void BTree<Type>::inOrder(Node<Type> *curr) {
   if (curr) {
     inOrder(curr->left);
@@ -111,6 +133,7 @@ template <class Type> void BTree<Type>::inOrder(Node<Type> *curr) {
     inOrder(curr->right);
   }
 }
+
 template <class Type> void BTree<Type>::postOrder(Node<Type> *curr) {
   if (curr) {
     postOrder(curr->left);
@@ -118,7 +141,12 @@ template <class Type> void BTree<Type>::postOrder(Node<Type> *curr) {
     std::cout << curr->item << " ";
   }
 }
-template <class Type> int BTree<Type>::nodeCount() { return nodeCount(root); }
+
+template <class Type> int BTree<Type>::nodeCount() {
+  //
+  return nodeCount(root);
+}
+
 template <class Type> int BTree<Type>::nodeCount(Node<Type> *curr) {
   if (curr) {
     return 1 + nodeCount(curr->left) + nodeCount(curr->right);
